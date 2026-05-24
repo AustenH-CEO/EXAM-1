@@ -3,64 +3,65 @@
 // 5/23/26
 
 using System.ComponentModel.Design;
+using System.Net.Http.Headers;
+using CharacterFile;
+using CharacterManagerFile;
 
-public class Program
+namespace ProgramFile
 {
-    public static void Main()
+
+    public class Program
     {
-        bool exit = false;
-        while (!exit)
+        public static void Main()
         {
-            CharacterMenu(ref exit);
-        }
-        Console.WriteLine("Exiting...");
-    }
-    static bool CharacterMenu(ref bool Exit)
-    {
-        string CharacterClass;
-        do
-        {
-            Console.WriteLine("Choose a class: (1) Warrior, (2) Mage, (3) Rogue, (0) Exit");
-            CharacterClass = Console.ReadLine();
-            if (int.TryParse(CharacterClass, out int input))
+            CharacterManager CharManager = new CharacterManager();
+            Character Warrior = new Character("Joe", "Warrior");
+            CharManager.AddCharacter(Warrior);
+            Character Mage = new Character("Jeblko", "Mage");
+            CharManager.AddCharacter(Mage);
+            Character Rogue = new Character("Naomi", "Rogue");
+            CharManager.AddCharacter(Rogue);
+            Console.WriteLine("Character Manager");
+            bool exit = false;
+            do
             {
-                switch (input)
+                Console.WriteLine("(1) Display Characters, (2) Search By Name, (3) Add Character, (4) Damage By Name, (0) Exit");
+                string input = Console.ReadLine();
+                if (int.TryParse(input, out int Choice))
                 {
-                    case (int)MenuChoice.Warrior:
-                        Console.WriteLine("Creating Warrior...");
-                        break;
-                    case (int)MenuChoice.Mage:
-                        Console.WriteLine("Creating Mage...");
-                        break;
-                    case (int)MenuChoice.Rogue:
-                        Console.WriteLine("Creating Rogue...");
-                        break;
-                    case (int)MenuChoice.Exit:
-                        Exit = true;
-                        break;
-                    default:
-                        Console.WriteLine("Not an option");
-                        break;
+                    switch (Choice)
+                    {
+                        case (int)MenuOptions.DisplayCharacters:
+                            CharManager.DisplayCharacters();
+                            break;
+                        case (int)MenuOptions.SearchByName:
+
+                            break;
+                        case (int)MenuOptions.AddCharacter:
+
+                            break;
+                        case (int)MenuOptions.DamageByName:
+
+                            break;
+                        case (int)MenuOptions.Exit:
+                            Console.WriteLine("Exiting");
+                            exit = true;
+                            break;
+                        default:
+                            Console.WriteLine("Choose 0, 1, 2, or 3");
+                            break;
+                    }
                 }
-            }  
-            else
-                Console.WriteLine("Please Enter a Valid Input...");
-        } while (Exit == false);
-
-        return Exit;
+            } while (!exit);
+            
+        }
     }
-
-}
-enum FightingClass
-{
-    Warrior = 80,
-    Mage = 45,
-    Rogue = 65
-}
-enum MenuChoice
-{
-    Warrior = 1,
-    Mage = 2,
-    Rogue = 3,
-    Exit = 0
+    enum MenuOptions
+    {
+        Exit,
+        DisplayCharacters,
+        SearchByName,
+        AddCharacter,
+        DamageByName,
+    }
 }

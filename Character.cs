@@ -49,6 +49,10 @@ namespace CharacterFile
                     break;
             }
         }
+        public void DamageCharacter (Character character, int damage)
+        {
+            character.CharacterHealth -= damage;
+        }
     }
     enum ClassHealth
     {

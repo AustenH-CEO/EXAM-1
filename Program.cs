@@ -6,6 +6,7 @@ using System.ComponentModel.Design;
 using System.Net.Http.Headers;
 using CharacterFile;
 using CharacterManagerFile;
+using GameUtitliy;
 
 namespace ProgramFile
 {
@@ -22,10 +23,11 @@ namespace ProgramFile
             Character Rogue = new Character("Naomi", "Rogue");
             CharManager.AddCharacter(Rogue);
             Console.WriteLine("Character Manager");
+            Character newCharacter;
             bool exit = false;
             do
             {
-                Console.WriteLine("(1) Display Characters, (2) Search By Name, (3) Add Character, (4) Damage By Name, (0) Exit");
+                Console.WriteLine("(1) Display Characters, (2) Add Character (0) Exit");
                 string input = Console.ReadLine();
                 if (int.TryParse(input, out int Choice))
                 {
@@ -34,21 +36,35 @@ namespace ProgramFile
                         case (int)MenuOptions.DisplayCharacters:
                             CharManager.DisplayCharacters();
                             break;
-                        case (int)MenuOptions.SearchByName:
-
-                            break;
                         case (int)MenuOptions.AddCharacter:
-
-                            break;
-                        case (int)MenuOptions.DamageByName:
-
+                            Console.WriteLine("Enter name (not required)");
+                            string userName = Console.ReadLine();
+                            Console.WriteLine("Enter class (required)");
+                            string userClass = Console.ReadLine();
+                            if (userName == "")
+                            {
+                                newCharacter = CharManager.CreateCharacter(userClass);
+                                CharManager.DisplayCharacter(newCharacter);
+                            }
+                            else
+                            {
+                                newCharacter = CharManager.CreateCharacter(userName, userClass);
+                                CharManager.DisplayCharacter(newCharacter);
+                            }
+                            Console.WriteLine("Damage this character? (Y/N)");
+                            string damage = Console.ReadLine();
+                            if (damage == "Y" || damage == "y")
+                            {
+                                newCharacter.CharacterHealth -= GameUtils.Damage();
+                                CharManager.DisplayCharacter(newCharacter);
+                            }
                             break;
                         case (int)MenuOptions.Exit:
                             Console.WriteLine("Exiting");
                             exit = true;
                             break;
                         default:
-                            Console.WriteLine("Choose 0, 1, 2, or 3");
+                            Console.WriteLine("Please choose a valid option.");
                             break;
                     }
                 }
@@ -60,8 +76,8 @@ namespace ProgramFile
     {
         Exit,
         DisplayCharacters,
-        SearchByName,
         AddCharacter,
-        DamageByName,
+        SearchByName, //not used
+        DamageByName, //not used
     }
 }

@@ -1,6 +1,7 @@
 ﻿// Character manager should set values for each character
 using System;
 using System.Collections.Generic;
+using System.Security.AccessControl;
 using System.Text;
 using CharacterFile;
 using ProgramFile;
@@ -26,17 +27,24 @@ namespace CharacterManagerFile
             }
 
         }
-        
-        /*
-        public Character DisplayByName(string Name)
+        public void DisplayCharacter(Character character)
         {
-            if (Name == "")
-            Console.WriteLine("Name: " + Char.CharacterName);
-            Console.WriteLine("Class: " + Char.CharacterClass);
-            Console.WriteLine("Health: " + Char.CharacterHealth);
+            Console.WriteLine("Name: " + character.CharacterName);
+            Console.WriteLine("Class: " + character.CharacterClass);
+            Console.WriteLine("Health: " + character.CharacterHealth);
             Console.WriteLine("--------");
-            return ;
         }
-        */
+        public Character CreateCharacter(string Name, string Class)
+        {
+            Character userChar = new Character(Name, Class);
+            Characters.Add(userChar);
+            return userChar;
+        }
+        public Character CreateCharacter(string Class)
+        {
+            Character userChar = new Character(Class);
+            Characters.Add(userChar);
+            return userChar;
+        }
     }
 }
